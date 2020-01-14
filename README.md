@@ -10,5 +10,5 @@ This Project has 3 parts:
       Follow the instructions
       
       
-  3: Shakespeare Concordance APP . 
+  3: Shakespeare Concordance APP   
       To test this, simply run main of "WordSearcher.java"
