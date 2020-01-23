@@ -77,11 +77,107 @@ public class HashTable {
     }
 
     //prints the contents of Entire HashTable
-    public void printHash(){
+    public void consolePrintHash(){
         for(int i = 0; i<capacity; i++){
             if (keys[i] != null){
                 StdOut.println("Key: "+ keys[i]+"  Hash: " +hashIt2(keys[i]) + "  Place: " +i +"  Val: " +vals[i]);
             }
         }
+    }
+
+    public void calculateEfficiencyVerbose(){
+        int numOfUniqKeys = 0, lastKeyPos = 0;
+        long distBetwnKeysRunning = 0, collisionsRunning = 0;
+        double aveDistBetwnKeys, aveCollis;
+        for(int i = 0; i<capacity; i++){
+            if (keys[i] != null){
+                numOfUniqKeys++;
+
+                distBetwnKeysRunning += i - lastKeyPos;
+                lastKeyPos = i;
+
+                collisionsRunning += i - hashIt2(keys[i]);
+
+            }
+        }
+        //average distance between keys
+        //average num of collisions
+        //Chi Squared Optimization
+        aveDistBetwnKeys = (double) distBetwnKeysRunning/numOfUniqKeys;
+        aveCollis = (double) collisionsRunning/numOfUniqKeys;
+
+        StdOut.println("Capacity (size of HashTable): "+ capacity);
+        StdOut.println("Num of Unique Keys: " + numOfUniqKeys);
+        StdOut.println("Average Distance Between Keys: "+ aveDistBetwnKeys);
+        StdOut.println("Total Num of Collisions: "+ collisionsRunning);
+        StdOut.println("Average Num of Collisions: "+ aveCollis);
+        StdOut.println("Optimal Distribution Metric (\"Goodness\") Measurement: "+ calculateGoodness());
+        StdOut.println("    Note: from 0.95-1.05 on the Goodness Measurement indicates keys are essentially optimally/uniformly distributed");
+    }
+
+    //calculates Chi-Squared Optimalness,
+    public double calculateGoodness(){
+        double numerator = 0;
+        double denominator = 0;
+        double numOfKeys = 0;
+        int m = capacity;
+        double numItemsInVal = 0;
+        for (int i = 0; i<capacity; i++){
+            if (vals[i] != null) {
+                numOfKeys++;
+                numItemsInVal = 1;
+                numerator += numItemsInVal * (numItemsInVal+1)/2;
+            }
+        }
+        double part1 = (numOfKeys/(2 * m));
+        double part2 =(numOfKeys+(2*m)-1);
+        denominator = part1*part2;
+        double goodness = numerator/denominator;
+        return goodness;
+    }
+
+    //internal Caluclation for Graphs
+    public double calculateAveCollisionsInternal(){
+        int numOfUniqKeys = 0, lastKeyPos = 0;
+        long distBetwnKeysRunning = 0, collisionsRunning = 0;
+        double aveDistBetwnKeys, aveCollis;
+        for(int i = 0; i<capacity; i++){
+            if (keys[i] != null){
+                numOfUniqKeys++;
+
+
+                distBetwnKeysRunning += i - lastKeyPos;
+                lastKeyPos = i;
+
+                int temp = (i - hashIt2(keys[i])) % (capacity - 1);
+                collisionsRunning += temp;
+            }
+        }
+        // aveDistBetwnKeys = (double) distBetwnKeysRunning/numOfUniqKeys;
+        aveCollis = (double) collisionsRunning/numOfUniqKeys;
+        StdOut.print(aveCollis+ " ");
+        return aveCollis;
+    }
+
+    //internal calculation for Goodness for Graphs
+    public double calculateGoodnessInternal(){
+        double numerator = 0;
+        double denominator = 0;
+        double numOfKeys = 0;
+        int m = capacity;
+        double numItemsInVal = 0;
+        for (int i = 0; i<capacity; i++){
+            if (vals[i] != null) {
+                numOfKeys++;
+                numItemsInVal = 1;
+                numerator += numItemsInVal * (numItemsInVal+1)/2;
+            }
+        }
+        double part1 = (numOfKeys/(2 * m));
+        double part2 =(numOfKeys+(2*m)-1);
+        denominator = part1*part2;
+        double goodness = numerator/denominator;
+        StdOut.print(goodness+ " ");
+        return goodness;
     }
 }

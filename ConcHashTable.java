@@ -162,18 +162,18 @@ public class ConcHashTable {
     public double calculateGoodness(){
         double numerator = 0;
         double denominator = 0;
-        double numOfUniqKeys = 0;
+        double numOfKeys = 0;
         int m = capacity;
         double numItemsInVal = 0;
         for (int i = 0; i<capacity; i++){
             if (vals[i] != null) {
-                numOfUniqKeys++;
+                numOfKeys++;
                 numItemsInVal = vals[i].lengthList();
-                numerator += numItemsInVal * (numItemsInVal+1)/2;
+                numerator+=  numItemsInVal * (numItemsInVal+1)/2;
             }
         }
-        double part1 = (numOfUniqKeys/(2 * m));
-        double part2 =(numOfUniqKeys+(2*m)-1);
+        double part1 = (numOfKeys/(2 * m));
+        double part2 =(numOfKeys+(2*m)-1);
         denominator = part1*part2;
         return numerator/denominator;
     }

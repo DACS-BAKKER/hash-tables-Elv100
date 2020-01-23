@@ -15,7 +15,7 @@
           </grid>
         </constraints>
         <properties>
-          <text value="Enter search word"/>
+          <text value="Enter search word (lowercase only)"/>
         </properties>
       </component>
       <component id="1c627" class="javax.swing.JTextArea" binding="occurOutput">

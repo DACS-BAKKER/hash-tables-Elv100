@@ -43,8 +43,8 @@ public class ConcHashTableRunner {
 
     public static void main(String[] args) {
         StdOut.println("Welcome to Elven's Concordance HashTable Runner");
-        StdOut.println("This HashTable tests with Shakespere's Sonnets as data, which has" +numOfData+" unique keys");
-        StdOut.println("We test HashTable sizes from: n*"+numOfData+" - m*"+ numOfData+ " at increasing incremements of i");
+        StdOut.println("This HashTable tests with Shakespere's Sonnets as data, which has " +numOfData+" unique keys");
+        StdOut.println("We test HashTable sizes from: n*"+numOfData+" to m*"+ numOfData+ " at increasing incremements of i");
         StdOut.println("ie, we test n*"+numOfData+", (n+i)*"+numOfData+", (n+2i)*"+numOfData+"...m*"+numOfData);
         StdOut.println("Please enter your desired n");
         double bot = StdIn.readDouble();
@@ -89,6 +89,7 @@ public class ConcHashTableRunner {
                     StdOut.println("Current HashTable Size: "+i);
                     loadText(currHash);
                     currHash.calculateEfficiencyVerbose();
+                    StdOut.println(currHash.calculateGoodness());
                 }
                 break;
             case 3:
